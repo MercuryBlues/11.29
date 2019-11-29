@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rq.mapper.UserMapper">
+    <select id="Login" parameterType="user" resultType="user">
+     select  * from user where loginName=#{loginName} and password=#{password}
+    </select>
+
+    <select id="getUserlist" resultType="user" parameterType="user">
+      select  * from user
+        <where>
+            <if test="name != null and name != ''">
+                and name like '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserByid" parameterType="user" resultType="user">
+      select  * from user where id=#{id}
+    </select>
+
+    <update id="updateUser" parameterType="user">
+        update user set headpath=#{headpath} where id=#{id}
+    </update>
+
+    <insert id="RegisterUser" useGeneratedKeys="true" keyProperty="id" parameterType="user">
+        insert into user value (#{id}=null,#{name},#{loginName},#{password},#{sex},#{birth},#{tel},#{home},#{power},#{headpath})
+    </insert>
+    <delete id="deleteUserByid" parameterType="user">
+        delete from user where id=#{id}
+    </delete>
+
+
+    <update id="modifyPs" parameterType="user">
+        update user set password=#{password} where id =#{id}
+    </update>
+
+    <select id="checkName" parameterType="string" resultType="java.lang.Integer">
+        select count(*) from user where name=#{name}
+    </select>
+
+
+    <select id="search" parameterType="user" resultType="user">
+        select  * from  user
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+            <if test="home!=null and home!=''">
+                and home =#{home}
+            </if>
+        </where>
+    </select>
+
+    <select id="layuiList" parameterType="user" resultType="user">
+        select  * from user
+
+    </select>
+
+    <select id="userCount"  resultType="integer">
+        select count(*) from user
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+            <if test="sex!=null and sex!=''">
+                and sex =#{sex}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectpage" parameterType="hashmap" resultType="user">
+        SELECT * FROM USER
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+            <if test="sex!=null and sex!=''">
+                and sex =#{sex}
+            </if>
+        </where>
+        LIMIT #{pagestart},#{size}
+    </select>
+    
+    <delete id="deleteUser" parameterType="queryVo">
+        delete from user where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--<insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="user">-->
+        <!--insert into user value (null,#{name},#{loginName},#{password},#{sex},#{birth},#{tel},#{home},#{power},#{headpath})-->
+    <!--</insert>-->
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="user">
+        insert into user value (null,#{name},#{loginName},#{password},#{sex},#{birth},#{tel},#{home},#{power},#{headpath})
+    </insert>
+
+
+</mapper>

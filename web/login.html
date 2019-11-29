@@ -63,7 +63,8 @@
                     success: function (d) {
                         console.log(d);
                         if (d.msg == "yes") {
-                            location.href = "admin.html";
+                            window.sessionStorage.setItem("user",d.name);
+                            location.href = "admin.action";
                         } else {
                             layer.msg("用户名密码错误")
                         }

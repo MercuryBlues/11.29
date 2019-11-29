@@ -188,20 +188,6 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping("/modifyPs.action")
-    public String modifyPs(User user) throws Exception {
-        Integer id = (Integer) request.getSession().getAttribute("id");
-        user.setId(id);
-        userDao.modifyPs(user);
-        return "userList";
-    }
-
-    @RequestMapping("/modifyPs2.action")
-    public String modifyPs2(User user) throws Exception {
-
-        userDao.modifyPs(user);
-        return "userList";
-    }
 
 
     @RequestMapping("/outSystem.action")
@@ -212,20 +198,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("/checkName.action")
-    @ResponseBody
-    public String checkName(String name) {
-        int i = userDao.checkName(name);
-        return (i > 0) ? "用户名被占用" : "用户名可用";
-    }
 
-
-    @RequestMapping("/search.action")
-    @ResponseBody
-    public List<User> search(@RequestBody User user) {
-        List<User> users = userDao.search(user);
-        return users;
-    }
 
     @RequestMapping("/LoginTest.action")
     @ResponseBody
@@ -260,6 +233,11 @@ public class UserController {
     @RequestMapping("/layuiTablePage.action")
     public String layuiTablePage() {
         return "layuiPage";
+    }
+
+    @RequestMapping("/admin.action")
+    public String admin() {
+        return "admin";
     }
 
 
